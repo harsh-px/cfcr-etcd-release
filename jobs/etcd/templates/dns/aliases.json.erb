@@ -1,0 +1,8 @@
+<%=
+aliases = {}
+link('etcd').instances.each do |instance|
+  aliases.merge!({ "peer-#{instance.index}.etcd.local" => [instance.address] })
+end
+
+JSON.dump(aliases)
+%>

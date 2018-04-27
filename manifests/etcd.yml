@@ -130,10 +130,7 @@ variables:
   type: certificate
   options:
     ca: etcd_ca
-    common_name: etcd.default.etcd.bosh
-    alternative_names:
-    - "etcd.default.etcd.bosh"
-    - "*.etcd.default.etcd.bosh"
+    common_name: "*.etcd.local"
     extended_key_usage:
     - server_auth
     - client_auth
@@ -142,10 +139,7 @@ variables:
   type: certificate
   options:
     ca: etcd_ca
-    common_name: etcd.default.etcd.bosh
-    alternative_names:
-    - "etcd.default.etcd.bosh"
-    - "*.etcd.default.etcd.bosh"
+    common_name: "*.etcd.local"
     extended_key_usage:
     - server_auth
     - client_auth

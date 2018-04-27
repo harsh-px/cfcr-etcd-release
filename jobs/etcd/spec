@@ -9,6 +9,7 @@ templates:
   bin/post-start.erb: bin/post-start
   bin/pre-start.erb: bin/pre-start
   bin/setup.erb: bin/setup
+  dns/aliases.json.erb: dns/aliases.json
   config/bpm.yml.erb: config/bpm.yml
   config/etcd-ca.crt.erb: config/etcd-ca.crt
   config/etcd.crt.erb: config/etcd.crt
