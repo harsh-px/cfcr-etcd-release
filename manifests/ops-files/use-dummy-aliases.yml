@@ -10,9 +10,15 @@
   value: dummy.etcd.internal
 
 - type: replace
-  path: /variables/name=tls_etcd/options/alternative_names?
+  path: /variables/name=tls_etcd/options/common_name
   value: "*.dummy.etcd.internal"
 
 - type: replace
-  path: /variables/name=tls_etcd_peer/options/alternative_names?
+  path: /variables/name=tls_etcd_peer/options/common_name
   value: "*.dummy.etcd.internal"
+
+- type: remove
+  path: /variables/name=tls_etcd/options/alternative_names
+
+- type: remove
+  path: /variables/name=tls_etcd_peer/options/alternative_names
