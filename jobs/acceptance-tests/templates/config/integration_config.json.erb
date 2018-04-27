@@ -1,5 +1,5 @@
 <%
-etcd_endpoints = link('etcd').instances.map { |server| "https://#{server.address}:2379" }
+etcd_endpoints = link('etcd').instances.map { |server| "https://peer-#{server.index}.etcd.local:2379" }
 
 config = {
   etcd_endpoints: etcd_endpoints,

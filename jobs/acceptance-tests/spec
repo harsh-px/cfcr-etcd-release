@@ -6,6 +6,7 @@ templates:
   config/ca.crt.erb: config/ca.crt
   config/client.crt.erb: config/client.crt
   config/client.key.erb: config/client.key
+  dns/aliases.json.erb: dns/aliases.json
 
 packages:
 - acceptance
