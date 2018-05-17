@@ -1,0 +1,8 @@
+---
+- type: replace
+  path: /instance_groups/name=master/jobs/-
+  value:
+    name: bbr-cfcr-etcd-db
+    release: cfcr-etcd
+    properties:
+      release_level_backup: true

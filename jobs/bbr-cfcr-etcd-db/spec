@@ -1,0 +1,13 @@
+---
+name: bbr-cfcr-etcd-db
+
+templates:
+  backup.sh.erb: bin/bbr/backup
+
+packages: []
+
+properties:
+  release_level_backup:
+    default: false
+    description: "for bbr scripts"
+

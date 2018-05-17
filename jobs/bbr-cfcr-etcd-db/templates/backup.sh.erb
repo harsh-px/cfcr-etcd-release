@@ -1,0 +1,23 @@
+#!/bin/bash
+<% if p('release_level_backup') %>
+    set -eo pipefail
+
+    source /var/vcap/jobs/etcd/bin/utils.sh
+
+    BBR_ARTIFACT_FILE_PATH="${BBR_ARTIFACT_DIRECTORY}/snapshotdb"
+
+    export ETCDCTL_API=3
+
+    /var/vcap/packages/etcd/bin/etcdctl \
+      --cacert /var/vcap/jobs/etcd/config/etcdctl-ca.crt \
+      --cert /var/vcap/jobs/etcd/config/etcdctl.crt \
+      --key /var/vcap/jobs/etcd/config/etcdctl.key \
+      --endpoints "${etcd_endpoint_address}" \
+      snapshot save snapshotdb
+
+    mv snapshotdb ${BBR_ARTIFACT_FILE_PATH}
+
+<% else %>
+    echo "backup script deactivated due to release_level_backup being set to FALSE\n"
+<% end %>
+
