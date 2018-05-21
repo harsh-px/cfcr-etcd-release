@@ -3,6 +3,9 @@ name: bbr-cfcr-etcd-db
 
 templates:
   backup.sh.erb: bin/bbr/backup
+  restore.sh.erb: bin/bbr/restore
+  pre-restore-lock.sh.erb: bin/bbr/pre-restore-lock
+  post-restore-lock.sh.erb: bin/bbr/post-restore-lock
 
 packages: []
 

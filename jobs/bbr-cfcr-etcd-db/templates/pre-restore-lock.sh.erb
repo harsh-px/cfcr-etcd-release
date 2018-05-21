@@ -1,0 +1,12 @@
+#!/bin/bash
+<% if p('release_level_backup') %>
+
+set -eo pipefail
+/var/vcap/bosh/bin/monit unmonitor etcd
+/var/vcap/jobs/bpm/bin/bpm stop etcd
+
+rm -rf /var/vcap/store/etcd
+
+<% else %>
+echo "backup script deactivated due to release_level_backup being set to FALSE\n"
+<% end %>
