@@ -1,9 +1,13 @@
 #!/bin/bash
+
 <% if p('release_level_backup') %>
 
-set -eo pipefail
-/var/vcap/bosh/bin/monit monitor etcd
+set -exo pipefail
+/var/vcap/bosh/bin/monit start etcd
+/var/vcap/bosh/bin/monit start kube-apiserver
 
+/var/vcap/bosh/bin/monit monitor etcd
+/var/vcap/bosh/bin/monit monitor kube-apiserver
 <% else %>
 echo "backup script deactivated due to release_level_backup being set to FALSE\n"
 <% end %>

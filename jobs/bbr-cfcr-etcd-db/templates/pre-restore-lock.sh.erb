@@ -1,7 +1,9 @@
 #!/bin/bash
 <% if p('release_level_backup') %>
 
-set -eo pipefail
+set -exo pipefail
+/var/vcap/bosh/bin/monit unmonitor kube-apiserver
+/var/vcap/jobs/bpm/bin/bpm stop kube-apiserver
 /var/vcap/bosh/bin/monit unmonitor etcd
 /var/vcap/jobs/bpm/bin/bpm stop etcd
 

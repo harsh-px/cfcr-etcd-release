@@ -1,6 +1,6 @@
 #!/bin/bash
 <% if p('release_level_backup') %>
-set -eo pipefail
+set -exo pipefail
 
 source /var/vcap/jobs/etcd/bin/utils.sh
 
