@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -euo pipefail
+
+/var/vcap/bosh/bin/monit unmonitor etcd
+/var/vcap/jobs/bpm/bin/bpm stop etcd
+
+while /var/vcap/jobs/bpm/bin/bpm pid etcd; do
+    echo "Waiting for etcd to exit"
+    sleep 1
+done
+
+echo "Deleting old etcd data"
+rm -rf /var/vcap/store/etcd

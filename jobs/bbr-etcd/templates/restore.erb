@@ -2,23 +2,17 @@
 
 set -euo pipefail
 
+function ping_bootstrap_etcd {
+ curl --silent https://master-0.etcd.cfcr.internal:2379/health --cacert /var/vcap/jobs/etcd/config/etcdctl-ca.crt --cert /var/vcap/jobs/etcd/config/etcdctl.crt --key /var/vcap/jobs/etcd/config/etcdctl.key
+}
+
+<% if spec.bootstrap %>
 source /var/vcap/jobs/etcd/bin/utils.sh
 
 exec 1>&2
 
 export BBR_ARTIFACT_FILE_PATH="${BBR_ARTIFACT_DIRECTORY}/snapshotdb"
 export ETCDCTL_API=3
-
-/var/vcap/bosh/bin/monit unmonitor etcd
-/var/vcap/jobs/bpm/bin/bpm stop etcd
-
-while /var/vcap/jobs/bpm/bin/bpm pid etcd; do
-    echo "Waiting for etcd to exit"
-    sleep 1
-done
-
-echo "Deleting old etcd data"
-rm -rf /var/vcap/store/etcd
 
 echo "Restoring etcd data"
 /var/vcap/packages/etcd/bin/etcdctl \
@@ -29,6 +23,23 @@ echo "Restoring etcd data"
     --data-dir="/var/vcap/store/etcd"
 
 chown -R vcap:vcap /var/vcap/store/etcd
+
+<% else %>
+# MASTER 1 | 2
+# Wait here till bootstrap is restored
+# -> ETCD has been brought down in pre_restore_lock
+# -> rm /var/vcap/store/etcd
+# -> wait till bootstrap etcd process has started.
+
+until ping_bootstrap_etcd
+do
+    echo "Waiting for etcd bootstrap node to come up"
+    sleep 1
+done
+
+# -> start local ETCD
+#
+<% end %>
 
 echo "Starting etcd"
 /var/vcap/jobs/bpm/bin/bpm start etcd
