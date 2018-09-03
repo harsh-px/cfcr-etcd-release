@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+echo "---
+restore_name: etcd-snapshot
+<% if spec.bootstrap %>
+backup_name: etcd-snapshot
+<% end %>
+"

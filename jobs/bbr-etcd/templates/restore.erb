@@ -2,11 +2,6 @@
 
 set -euo pipefail
 
-function ping_bootstrap_etcd {
- curl --silent https://master-0.etcd.cfcr.internal:2379/health --cacert /var/vcap/jobs/etcd/config/etcdctl-ca.crt --cert /var/vcap/jobs/etcd/config/etcdctl.crt --key /var/vcap/jobs/etcd/config/etcdctl.key
-}
-
-<% if spec.bootstrap %>
 source /var/vcap/jobs/etcd/bin/utils.sh
 
 exec 1>&2
@@ -23,23 +18,6 @@ echo "Restoring etcd data"
     --data-dir="/var/vcap/store/etcd"
 
 chown -R vcap:vcap /var/vcap/store/etcd
-
-<% else %>
-# MASTER 1 | 2
-# Wait here till bootstrap is restored
-# -> ETCD has been brought down in pre_restore_lock
-# -> rm /var/vcap/store/etcd
-# -> wait till bootstrap etcd process has started.
-
-until ping_bootstrap_etcd
-do
-    echo "Waiting for etcd bootstrap node to come up"
-    sleep 1
-done
-
-# -> start local ETCD
-#
-<% end %>
 
 echo "Starting etcd"
 /var/vcap/jobs/bpm/bin/bpm start etcd
