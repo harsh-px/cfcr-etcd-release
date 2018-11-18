@@ -36,6 +36,9 @@ fi
 
 /var/vcap/packages/etcd/bin/etcd \
   --name="<%= spec.id %>" \
+  --quota-backend-bytes=8589934592 \
+  --snapshot-count=5000 \
+  --auto-compaction-retention=3 \
   --data-dir="/var/vcap/store/etcd" \
   --listen-peer-urls="https://0.0.0.0:2380" \
   --initial-advertise-peer-urls="${etcd_peer_address}" \
