@@ -40,18 +40,10 @@ fi
   --snapshot-count=5000 \
   --auto-compaction-retention=3 \
   --data-dir="/var/vcap/store/etcd" \
-  --listen-peer-urls="https://0.0.0.0:2380" \
+  --listen-peer-urls="http://0.0.0.0:2380" \
   --initial-advertise-peer-urls="${etcd_peer_address}" \
-  --listen-client-urls="https://0.0.0.0:2379" \
+  --listen-client-urls="http://0.0.0.0:2379" \
   --advertise-client-urls="${etcd_endpoint_address}" \
   --initial-cluster="${CLUSTER}" \
   --initial-cluster-state="${CLUSTER_STATE}" \
-  --client-cert-auth \
-  --trusted-ca-file="/var/vcap/jobs/etcd/config/etcd-ca.crt" \
-  --cert-file="/var/vcap/jobs/etcd/config/etcd.crt" \
-  --key-file="/var/vcap/jobs/etcd/config/etcd.key" \
-  --peer-client-cert-auth \
-  --peer-trusted-ca-file="/var/vcap/jobs/etcd/config/peer-ca.crt" \
-  --peer-cert-file="/var/vcap/jobs/etcd/config/peer.crt" \
-  --peer-key-file="/var/vcap/jobs/etcd/config/peer.key" \
 <% if_p("etcd.metrics_protocol", "etcd.metrics_port") do |protocol, port| %>  --listen-metrics-urls=<%= protocol %>://0.0.0.0:<%= port %> \<% end %>

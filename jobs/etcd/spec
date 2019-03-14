@@ -11,15 +11,6 @@ templates:
   bin/setup.erb: bin/setup
   bin/utils.sh.erb: bin/utils.sh
   config/bpm.yml.erb: config/bpm.yml
-  config/etcd-ca.crt.erb: config/etcd-ca.crt
-  config/etcd.crt.erb: config/etcd.crt
-  config/etcd.key.erb: config/etcd.key
-  config/etcdctl-ca.crt.erb: config/etcdctl-ca.crt
-  config/etcdctl.crt.erb: config/etcdctl.crt
-  config/etcdctl.key.erb: config/etcdctl.key
-  config/peer-ca.crt.erb: config/peer-ca.crt
-  config/peer.crt.erb: config/peer.crt
-  config/peer.key.erb: config/peer.key
 
 packages:
 - etcd
@@ -29,9 +20,6 @@ provides:
   type: etcd
   properties:
   - etcd.dns_suffix
-  - tls.etcdctl.ca
-  - tls.etcdctl.certificate
-  - tls.etcdctl.private_key
 
 consumes:
 - name: etcd
@@ -44,21 +32,3 @@ properties:
     description: IF provided with etcd.metrics_port, metrics endpoints listen with the protocol. http or https.
   etcd.metrics_port:
     description: IF provided with etcd.metrics_protocol, metrics endpoints listen on the port. 2379 and 2380 can not be used.
-  tls.etcd.ca: 
-    description: CA for etcd client and server authentication
-  tls.etcd.certificate:
-    description: Certificate for etcd client and server authentication
-  tls.etcd.private_key:
-    description: Private key for etcd client and server authentication
-  tls.etcdctl.ca:
-    description: CA for etcdctl client authentication
-  tls.etcdctl.certificate:
-    description: Certificate for etcdctl client authentication
-  tls.etcdctl.private_key:
-    description: Private key for etcdctl client authentication
-  tls.peer.ca:
-    description: CA for peer authentication
-  tls.peer.certificate:
-    description: Certificate for peer authentication
-  tls.peer.private_key:
-    description: Private key for peer authentication
